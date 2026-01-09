@@ -1,0 +1,15 @@
+{
+  "id": "ES",
+  "nombre": "España",
+  "organizacion": "Monarquía parlamentaria",
+  "partidos": [
+    "Partido Socialista Obrero Español",
+    "Partido Popular",
+    "Vox",
+    "Sumar",
+    "Esquerra Republicana de Catalunya",
+    "Junts per Catalunya",
+    "Partido Nacionalista Vasco"
+  ],
+  "id_presidente": "pedro_sanchez"
+}
