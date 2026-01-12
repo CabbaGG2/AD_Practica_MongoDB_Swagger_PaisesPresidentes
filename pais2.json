@@ -1,0 +1,12 @@
+{
+  "id": "US",
+  "nombre": "Estados Unidos",
+  "organizacion": "República federal presidencialista",
+  "partidos": [
+    "Democratic Party",
+    "Republican Party",
+    "Libertarian Party",
+    "Green Party"
+  ],
+  "id_presidente": "donald_trump"
+}

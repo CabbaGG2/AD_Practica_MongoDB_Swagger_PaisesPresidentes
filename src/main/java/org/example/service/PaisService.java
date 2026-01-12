@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.model.Pais;
 import org.example.repository.PaisRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import java.util.List;
 public class PaisService {
 
     private final PaisRepository paisRepo;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public PaisService(PaisRepository paisRepo) {
         this.paisRepo = paisRepo;
@@ -35,6 +38,15 @@ public class PaisService {
 
     public void actualizarPais(Pais p) {
         paisRepo.save(p);
+    }
+
+    public Pais deserializarPais(String fichero) {
+        try {
+            return objectMapper.readValue(new java.io.File(fichero), Pais.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
