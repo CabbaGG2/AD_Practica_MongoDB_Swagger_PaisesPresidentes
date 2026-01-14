@@ -1,0 +1,94 @@
+ANÁLISIS DETALLADO DE LA ESTRUCTURA DEL PROYECTO
+===================================================
+
+Este documento describe la finalidad de cada archivo y directorio principal dentro del proyecto "Practica_MongoDB_Presidentes_2".
+
+RUTA: / (raíz del proyecto)
+--------------------------
+
+### Archivo: pom.xml
+- **Ubicación:** `/pom.xml`
+- **Propósito:** Es el archivo principal de configuración de Maven (Project Object Model). Define las dependencias del proyecto (como Spring Boot, Spring Data MongoDB, Springdoc OpenAPI), la versión de Java, y cómo compilar y empaquetar la aplicación (por ejemplo, en un archivo JAR).
+
+### Archivo: .gitignore
+- **Ubicación:** `/.gitignore`
+- **Propósito:** Especifica qué archivos y directorios deben ser ignorados por el sistema de control de versiones Git. Esto es útil para evitar que archivos generados por el entorno de desarrollo (IDE), dependencias o compilaciones (como la carpeta `target/`) se suban al repositorio.
+
+### Archivos: pais.json, pais2.json, presidente.json, presidente2.json
+- **Ubicación:** `/`
+- **Propósito:** Son archivos de datos en formato JSON que contienen ejemplos de países y presidentes. Su finalidad es servir como datos de prueba o para poblar (sembrar) la base de datos MongoDB al inicio.
+
+### Directorio: src/
+- **Ubicación:** `/src/`
+- **Propósito:** Es el directorio principal que contiene todo el código fuente y los recursos de la aplicación. Se divide en `main` (código de la aplicación) y `test` (código de prueba).
+
+RUTA: /src/main/java/org/example/
+----------------------------------
+
+Es el paquete raíz donde reside toda la lógica de la aplicación en Java.
+
+### Archivo: Main.java
+- **Ubicación:** `/src/main/java/org/example/Main.java`
+- **Propósito:** Es el punto de entrada de la aplicación Spring Boot. Contiene el método `main` y la anotación `@SpringBootApplication`, que inicia el servidor y auto-configura todo el entorno de Spring.
+
+### Archivo: Secuencia.java
+- **Ubicación:** `/src/main/java/org/example/Secuencia.java`
+- **Propósito:** Es una clase de utilidad (helper). Dado que MongoDB no tiene un sistema de IDs auto-incrementales como las bases de datos SQL, esta clase se encarga de generar números de secuencia únicos para los IDs de los presidentes y países, asegurando que no haya duplicados.
+
+### Directorio: config/
+- **Ubicación:** `/src/main/java/org/example/config/`
+- **Propósito:** Contiene clases de configuración específicas para la aplicación.
+
+#### Archivo: MongoConfig.java
+- **Ubicación:** `/src/main/java/org/example/config/MongoConfig.java`
+- **Propósito:** Configura la integración con MongoDB. Puede definir beans personalizados para la conexión, el mapeo de tipos, o habilitar características avanzadas de Spring Data MongoDB.
+
+#### Archivo: OpenApiConfig.java
+- **Ubicación:** `/src/main/java/org/example/config/OpenApiConfig.java`
+- **Propósito:** Configura la documentación de la API generada por Springdoc OpenAPI. Aquí se puede personalizar la información que se muestra en la interfaz de Swagger UI, como el título de la API, la descripción, la versión, etc.
+
+### Directorio: controller/
+- **Ubicación:** `/src/main/java/org/example/controller/`
+- **Propósito:** Contiene los controladores REST. Estas clases son responsables de manejar las peticiones HTTP que llegan a la API, procesarlas y devolver una respuesta (generalmente en formato JSON).
+
+#### Archivos: RestPais.java y RestPresidente.java
+- **Ubicación:** `/src/main/java/org/example/controller/`
+- **Propósito:** Definen los endpoints (URLs) para las operaciones CRUD sobre países y presidentes. Por ejemplo, `GET /paises`, `POST /presidentes`, `DELETE /paises/{id}`, etc. Son el puente entre el "mundo exterior" y la lógica de negocio.
+
+### Directorio: model/
+- **Ubicación:** `/src/main/java/org/example/model/`
+- **Propósito:** Contiene las clases de modelo o entidad. Representan la estructura de los datos que se guardarán en la base de datos.
+
+#### Archivos: Pais.java y Presidente.java
+- **Ubicación:** `/src/main/java/org/example/model/`
+- **Propósito:** Son las representaciones en Java de los documentos que se almacenan en las colecciones de MongoDB. La anotación `@Document` las vincula a una colección específica. Definen los campos (atributos) que tendrá cada país y presidente.
+
+### Directorio: repository/
+- **Ubicación:** `/src/main/java/org/example/repository/`
+- **Propósito:** Contiene las interfaces de repositorio de Spring Data. Definen los métodos para acceder a la base de datos.
+
+#### Archivos: PaisRepository.java y PresidenteRepository.java
+- **Ubicación:** `/src/main/java/org/example/repository/`
+- **Propósito:** Extienden de `MongoRepository`. Spring Data implementa automáticamente los métodos CRUD básicos (como `save()`, `findById()`, `findAll()`, `deleteById()`) sin necesidad de escribir una sola consulta. También se pueden definir aquí métodos de consulta personalizados.
+
+### Directorio: service/
+- **Ubicación:** `/src/main/java/org/example/service/`
+- **Propósito:** Contiene la lógica de negocio de la aplicación. Actúa como una capa intermedia entre los controladores y los repositorios.
+
+#### Archivos: PaisService.java y PresidenteService.java
+- **Ubicación:** `/src/main/java/org/example/service/`
+- **Propósito:** Orquestan las operaciones. Por ejemplo, antes de guardar un presidente, el `PresidenteService` podría validar que el país asociado exista. Utilizan los repositorios para interactuar con la base de datos y son llamados por los controladores.
+
+RUTA: /src/main/resources/
+---------------------------
+
+### Archivo: application.properties
+- **Ubicación:** `/src/main/resources/application.properties`
+- **Propósito:** Es el archivo de configuración principal de Spring Boot. Aquí se definen propiedades clave-valor, como el puerto del servidor, la cadena de conexión a la base de datos MongoDB, configuraciones de logging, etc.
+
+RUTA: /target/
+--------------
+
+### Directorio: target/
+- **Ubicación:** `/target/`
+- **Propósito:** Este directorio es generado por Maven durante el proceso de compilación y empaquetado. Contiene los archivos `.class` (código compilado), el archivo JAR ejecutable de la aplicación y otros artefactos del build. No debe ser modificado manualmente ni subido al control de versiones.
